@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+		<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/c.css" rel="stylesheet" />
+		<style>
+			.mui-slider .mui-slider-item a{
+				width: 100%;
+				text-align: center;
+			}
+			.mui-slider .mui-slider-item img{
+				height: 150px;
+				width: 105px !important;
+			}
+			.c-subLab{
+				margin-top: 0;
+				margin-bottom: 5px;
+			}
+			.mui-table-view-cell > a:not(.mui-btn){
+				padding: 4px 5px;
+				margin: -4px -5px;
+			}
+			.c-red-btn {
+				margin: 10px 3% 30px;
+				width: 94%;
+			}
+		.c-radio-grid .radio-btn.active{
+			background: #9D2932;
+			color: #F1ECD8;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-fullscreen nomal-bg" >
+			<a class="mui-action-back mui-icon mui-pull-left"><img class="back" src="../image/back.png"/></a>
+				<div class="c-subTitle">
+				用户中心
+			</div>
+			<div class="mui-scroll-wrapper" style="top: 150px;">
+				<div class="mui-scroll">
+				
+				<div id="slider" class="mui-slider" >
+				  <div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+					  <a href="#">
+						<img src="../image/04.png">
+					  </a>
+					</div>
+					<!-- 第一张 -->
+					<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/01.png">
+					  </a>
+					</div>
+					<!-- 第二张 -->
+					<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/02.png">
+					  </a>
+					</div>
+					<!-- 第三张 -->
+					<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/03.png">
+					  </a>
+					</div>
+					<!-- 第四张 -->
+					<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/04.png">
+					  </a>
+					</div>
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+					  <a href="#">
+						<img src="../image/01.png">
+					  </a>
+					</div>
+					
+				  </div>
+				 <div class="slider-btn-layour">
+				 	<button id="slider-pre" class="slider-btn"><</button>
+				 	<button id="slider-next" class="slider-btn">></button>
+				 </div>
+				</div>
+				<ul class="mui-table-view">
+						<li class="mui-table-view-cell name">
+							<label class="c-subLab">昵称</label>
+							<a class="mui-navigate-right" id="nikename">
+							</a>
+						</li>
+						<li class="mui-table-view-cell grade">
+							<label class="c-subLab">等级</label>
+							<a class="">
+								 <ul class="c-grade-list" id="gradeList">
+									
+									  <li class="grade-tip" >晋升级别</li>
+									  <li style="clear: both;"></li>
+								 </ul>
+							</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<label class="c-subLab">UID</label>
+							<a class="" id="uid">
+							</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<label class="c-subLab">创建时间</label>
+							<a class="" id="createTime">
+							</a>
+						</li>
+				</ul>
+				<div>
+					<button type="button" class="c-red-btn">退出登录</button>
+				</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="mui-popup c-pop mui-popup-in " id="name-pop" style="display: none;">
+				<div class="mui-popup-inner">
+					<div class="mui-popup-title">修改昵称</div>
+					<div class="mui-popup-input c-pop-input">
+						
+						<input type="text" id="nikeNameinput" autofocus="" placeholder="输入昵称">
+					</div>
+					
+				</div>
+				<div class="mui-popup-buttons">
+					<span class="mui-popup-button pop-cancel">取消</span>
+					<span class="mui-popup-button pop-sure" onclick="editnickname()">确定</span>
+				</div>
+			</div>
+			
+			<div class="mui-popup c-pop mui-popup-in" id="rise-pop" style="display: none;">
+				<div class="mui-popup-inner">
+					<div class="mui-popup-title">晋升级别</div>
+					<ul class="mui-table-view mui-grid-view mui-grid-9 c-radio-grid">
+				<!-- 	<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+						<a class="radio-btn active" href="#">
+							丞相
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+						<a class="radio-btn" href="#">
+							元帅
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+						<a class="radio-btn" href="#">
+							将军
+						</a>
+					</li> -->
+					</ul>
+					
+					<div class="c-bottom-tip c-pop-input">
+						<label id="levelnum">晋升条件:需一次性充值 999 ETH</label>
+						<div class="c-tip">您尚未达到要求，是否晋升级别？</div>
+						
+					</div>
+					
+				</div>
+				<div class="mui-popup-buttons">
+					<span class="mui-popup-button pop-cancel">取消</span>
+					<span class="mui-popup-button pop-sure">确定</span>
+				</div>
+			</div>
+			<div class="mui-popup-backdrop mui-active" style="display: none;"></div>
+		</div>
+		<script src="../js/mui.js"></script>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var index = 0;
+			var buy_limit_num = null;
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+			  interval:0//自动轮播周期，若为0则不自动播放，默认为0；
+			});
+			$("#slider-pre").on("tap",function(){
+				if(index==-1){
+					index=2;
+				}else{
+					index -= 1;	
+				}
+				gallery.slider().gotoItem(index);
+			})
+			$("#slider-next").on("tap",function(){
+				if(index==4){
+					index=1;
+				}else{
+					index += 1;
+				}
+				
+				gallery.slider().gotoItem(index);
+			})
+			mui('.mui-scroll-wrapper').scroll({
+				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+			});
+			$(".grade").on("tap", function() {
+				// e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				$("#rise-pop").css("display","block");
+				$(".mui-popup-backdrop").css("display","block")
+			});
+			$(".name").on("tap", function() {
+				// e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				$("#name-pop").css("display","block");
+				$(".mui-popup-backdrop").css("display","block")
+			});
+			$(".pop-cancel").on("click",function(){
+				$(".c-pop").css("display","none");
+				$(".mui-popup-backdrop").css("display","none")
+			})
+			mui(".c-radio-grid").on("tap",".radio-btn",function(){
+				$(".c-radio-grid .radio-btn").removeClass("active");
+				$(this).addClass("active");
+				var position = $(this).attr("posi");
+				$("#levelnum").text("晋升条件:需一次性充值 "+ buy_limit_num[position]+" ETH");
+			})
+			
+			function plusReady(){
+				var params ={};
+				params.from = itemUrl.mfrom;
+				params.sign = itemUrl.sign;
+				params.token = plus.storage.getItem("token");
+				mui.post(baseUrl+itemUrl.center,params,function(data){
+						if(data.code=="200"){
+							$("#nikename").text(data.data.profile.nickname);
+							$("#uid").text(data.data.account.uid);
+							$("#createTime").text(data.data.account.username);
+							buy_limit_num = data.data.levellist.buy_limit_num;
+							switch(data.data.account.levelname){
+								case "士兵":
+								$("#gradeList .grade-tip").before('<li class="bin" >士兵</li>');
+								break;
+								case "丞相":
+								$("#gradeList .grade-tip").before('<li class="cheng" >丞相</li>');
+								break;
+								case "元帅":
+								$("#gradeList .grade-tip").before('<li class="yuan" >元帅</li>');
+								break;
+								case "将军":
+								$("#gradeList .grade-tip").before('<li class="jian" >将军</li>');
+								break;
+							}
+							data.data.levellist.buy_limit_level.forEach(function(e,i){
+								
+								if(e !="士兵"){
+									var item ='<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">'+
+										'<a class="radio-btn" href="#" posi="'+i+""+'">'+e +'</a>'+
+									'</li>';
+									$("#rise-pop .c-radio-grid").append(item);
+								}
+							})
+							$("#rise-pop .c-radio-grid a").eq(0).addClass("active");
+							var position =$("#rise-pop .c-radio-grid a").eq(0).attr("posi");
+							$("#levelnum").text("晋升条件:需一次性充值 "+ buy_limit_num[position]+" ETH");
+						}
+					},'json'
+				);
+				
+			}
+				document.addEventListener("plusready",plusReady,false);
+				function editnickname(){
+					var params ={};
+					params.from = itemUrl.mfrom;
+					params.sign = itemUrl.sign;
+					params.token = plus.storage.getItem("token");
+					params.nickname = $("#nikeNameinput").val();
+					mui.post(baseUrl+itemUrl.nikeName,params,function(data){
+						//alert(JSON.stringify(data));
+						mui.toast(data.message,{ duration:'long', type:'div' });
+							if(data.code=="200"){
+								//$("#username").text(data.data.account.username);
+								$(".c-pop").css("display","none");
+								$(".mui-popup-backdrop").css("display","none")
+							}
+						},'json'
+					);
+					
+				}
+		</script>
+	</body>
+</html>

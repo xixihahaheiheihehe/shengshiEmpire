@@ -1,0 +1,18 @@
+{
+  "index.html": {
+    "resources": [
+      "html/tab_home.html"
+    ],
+    "refer": [
+      "html/tab_mine.html",
+      "html/tab_zhengtu.html",
+      "html/tab_duihuan.html",
+      "html/tab_home.html"
+    ]
+  },
+  "html/login.html": {
+    "refer": [
+      "index.html"
+    ]
+  }
+}

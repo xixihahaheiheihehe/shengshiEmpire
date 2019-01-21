@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="../css/mui.min.css" rel="stylesheet"/>
+	<link href="../css/c.css" rel="stylesheet"/>
+	<style>
+		.c-mine-list .mui-table-view-cell>a img{
+			width: 28px;
+			position: absolute;
+			left: 15px;
+		}
+		.c-mine-list .mui-table-view-cell>a {
+			line-height: 30px;
+			padding-left: 50px;
+			font-size: 18px;
+		}
+		.mui-table-view-cell>a:not(.mui-btn){color: #7D6043;}
+		.mui-table-view-cell:after,.mui-table-view:after{
+			background-color: #DFD1AD !important
+		}
+	</style>
+	</head>
+	
+	<body >
+     <div class=" mui-fullscreen c-transpant mine-bg" >
+		 <div class="c-subTitle">
+			 我的
+		 </div>
+     	 <ul class="mui-table-view c-transpant c-mine-list" >
+     	    <li class="mui-table-view-cell">
+     	        <a class="mui-navigate-right" href="mine_use_center.html">
+     	         <img src="../image/a01.png" />   用户中心
+     	        </a>
+     	    </li>
+     	     <li class="mui-table-view-cell">
+     	        <a class="mui-navigate-right" href="notice.html">
+     	         <img src="../image/a02.png" />     通知公告
+     	        </a>
+     	    </li>
+     	    <li class="mui-table-view-cell">
+     	        <a class="mui-navigate-right" href="mine_safe_set.html">
+     	         <img src="../image/a03.png" />     安全设置
+     	        </a>
+     	    </li>
+     	    <li class="mui-table-view-cell">
+     	        <a class="mui-navigate-right" href="mine_withdraw.html">
+     	          <img src="../image/a04.png" />   提币地址
+     	        </a>
+     	    </li>
+			<li class="mui-table-view-cell">
+			    <a class="mui-navigate-right" href="mine_invite_share.html">
+			       <img src="../image/a05.png" />   邀请分享
+			    </a>
+			</li>
+			<li class="mui-table-view-cell">
+			    <a class="mui-navigate-right" href="mine_family.html">
+			       <img src="../image/a06.png" />   我的家族
+			    </a>
+			</li>
+			<li class="mui-table-view-cell">
+			    <a class="mui-navigate-right" href="mine_about_us.html">
+			       <img src="../image/a07.png" />  关于我们
+			    </a>
+			</li>
+     	</ul>
+     		
+     </div>
+	 <script src="../js/mui.min.js"></script>
+	 <script>
+		 mui("body").on('tap', 'a', function(e) {
+		 	e.preventDefault();
+		 	var url = this.getAttribute('href');
+		 	var tap = this.getAttribute('tap');
+		 	if(url === '#' || typeof(url) == 'undefined' || !url) return false;
+		 	var id = url,
+		 		extras = this.getAttribute("extras");
+		 	mui.openWindow({
+		 		id: id,
+		 		url: url,
+		 		show: {
+		 			autoShow: true
+		 		},
+		 		extras: {
+		 			data: extras
+		 		}
+		 	});
+		 })
+	 </script>
+	</body>
+</html>

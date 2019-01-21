@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/d.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-fullscreen {
+				background: url(../image/bg_home.jpg) no-repeat;
+				background-size: 100% 100%;
+			}
+			
+			body {
+				font-size: 0;
+				line-height: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-fullscreen">
+			<a class="mui-action-back"><img src="../image/back.png" /></a>
+			<a class="rule"><img src="../image/rule.png" /></a>
+			<!--<div class="page-title">高级区</div>-->
+			<div class="normal-body" align="center">
+				<div class="leiji-money">	
+				<h5 class="totalRC">9999999999</h5>
+				<h5>基金累计(RC)</h5></div>
+				
+			    <div class="item-list">
+			    	<!--<div class="normal-part high-part">
+					<div class="title-desc">
+						<label>第6局</label>
+						<label class="book">预约</label>
+					</div>
+					<div class="progress">
+						<span class="have-chou"></span>
+						<span class="need-chou"></span>
+					</div>
+					<div class="progess-message"><span>已筹555555</span><span>/需筹99999999,进度70%</span></div>
+				</div>
+				<div class="normal-part high-part">
+					<div class="title-desc">
+						<label>第5局</label>
+						<label class="finish">已完成</label>
+					</div>
+					<div class="progress">
+						<span class="have-chou"></span>
+						<span class="need-chou"></span>
+					</div>
+					<div class="progess-message"><span>已筹555555</span><span>/需筹99999999,进度70%</span></div>
+				</div>-->
+			    </div>
+				
+			</div>
+
+              <div class="mui-popup mui-popup-in" id='grab-ticket' style="display: none;">
+				<div class="mui-popup-inner">
+					<div class="book-title high-title"><label>高级区</label><label class="set-number">第8局</label><label class="touzhu-action">预约</label></div>
+					<div class="book-number">
+						<div><label>请输入数量:</label><label class="total-money">可用368000</label></div>
+						<input type="text"  id="invest-money" placeholder="输入数量(最低100 ~ 最高5%)">
+					</div>
+					<div class="book-number">
+						<div><label>交易密码:</label></div>
+						<input type="text" id="trade-password" placeholder="输入交易密码">
+					</div>
+					<div class="book-button">
+						<button class="book-cancle">取消</button>
+						<button class="book-sure">确定</button>
+					</div>
+				</div>
+			</div>
+			<div class="mui-popup-backdrop mui-active" id='grab-ticket-backdrop' style="display: none;"></div>
+
+ 
+			<div class="mui-popup mui-popup-in" id='rule-pop' style="display: none;">
+				<div class="mui-popup-inner">
+					<h5>规则说明</h5>
+					<p class="rule-text">以太坊协议将尽可能简单，以便以某些数据存储和时间上的低效为代价。一个普通的程序员也能够完美地 去实现完整的开发说明。这将最终有助于降低任何特殊个人或精英团体可能对协议的影响并且推进以太坊作为对所有人 开发的协议的应用前景。
+					</p>
+					<button class="have-konw">我已了解</button>
+				</div>
+			</div>
+			<div class="mui-popup-backdrop mui-active" id='rule-pop-backdrop' style="display: none;"></div>
+
+		</div>
+		
+		
+		
+			<script type="text/html" id="itemList">
+		<% for(i=0;i<list.length;i++){ %>
+				<div class="normal-part high-part" data-id="<%=list[i].id%>" data-title="<%=list[i].title%>" data-progress="<%=list[i].progress%>">
+					<div class="title-desc">
+						<label> <%=list[i].title%> </label>
+						
+						<% if(list[i].progress==100){ %>
+							<label class="finish">已完成</label>
+						<%}else{%>
+						  <label class="book">
+						   <% if(list[i].progress<=50){ %>
+							预约
+						   <%}else{%>
+							抢票
+						   <%}%>
+					      </label>
+						<%}%>
+						
+					</div>
+					
+				<div class="progress">
+					<%if(list[i].progress<=50){%>
+						<span class="have-chou" style="width:<%=list[i].progress%>%"></span>
+						<span class="need-chou" style="width:0px"> </span>
+					<%}else{%>
+						<span class="have-chou" style="width:50%"></span>
+						<span class="need-chou" style="width:<%= (list[i].progress-50)/50*100 %>%"> </span>
+					<%}%>
+	          </div>
+	          
+	            <div class="progess-message"><span>已筹<%=list[i].current%></span>
+					<span>需筹<%=list[i].target%>,进度<%=list[i].progress%>%</span>
+				</div>
+
+				</div>
+		<% } %>
+			
+			
+		</script>
+		
+		
+		<script type="text/javascript" src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/common.js" ></script>
+		<script type="text/javascript" src="../js/template.js" ></script>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<script type="text/javascript">
+						mui.init();
+			var invset_id,title,progress,totalRC;
+			mui.plusReady(function(){
+				initData();
+			});
+			function initData(){
+					$.ajax({
+					url: baseUrl+itemUrl.itemList,
+					type: 'post',
+					dataType: 'json',
+					data: {
+						token:getToken,
+						from:itemUrl.mfrom,
+						sign:itemUrl.sign,
+						catalog:2,
+						page:1
+					},
+					success: function(result) {
+						if(result.code == 200){
+						console.log(JSON.stringify(result.data));
+						 totalRC = result.data.totalRC;
+						 $(".totalRC").html(result.data.totalRC);
+						 $(".rule-text").html(result.data.rule);
+						  $(".total-money").text("可用"+result.data.score);
+					      var itemHtml = template.render('itemList', result.data);
+					      $(".item-list").append(itemHtml);
+					      initEvent();
+						 }
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.toast(JSON.stringify(errorThrown));
+					}
+			  });
+			}
+           			
+			
+			function initEvent(){
+			 	mui('.mui-fullscreen').on('tap', '.rule', function() {
+				$("#rule-pop").css("display", "block")
+				$("#rule-pop-backdrop").css("display", "block")
+			});
+			$(".have-konw").on("tap", function() {
+				$("#rule-pop").css("display", "none")
+				$("#rule-pop-backdrop").css("display", "none")
+			})
+			
+			mui('.item-list').on('tap',".normal-part",function(){
+				 invset_id = this.getAttribute("data-id");
+				 title = this.getAttribute("data-title");
+				 progress = this.getAttribute("data-progress");
+				 if(progress == 100){return;}
+				 if(progress <= 50){$(".touzhu-action").text("预约");}else{$(".touzhu-action").text("抢票");}
+				 $(".set-number").text(title);
+				
+				$("#grab-ticket").css("display", "block");
+				$("#grab-ticket-backdrop").css("display", "block");
+			})
+		
+			$(".book-cancle").on('tap',function(){
+				$("#grab-ticket").css("display", "none")
+				$("#grab-ticket-backdrop").css("display", "none")
+			});
+			$(".book-sure").on('tap',function(){
+                 if($("#invest-money").val() == ""){alert("请输入投注数量");return;}
+                 if($("#trade-password").val() == ""){alert("请输入交易密码");return;}
+                 invest();
+			});	
+			
+		}
+			//投注
+			function invest(){
+				plus.nativeUI.showWaiting("");
+				$.ajax({
+					url: baseUrl+itemUrl.invest,
+					type: 'post',
+					dataType: 'json',
+					data: {
+						token:getToken,
+						from:itemUrl.mfrom,
+						sign:itemUrl.sign,
+						fid:invset_id,
+						safeword:$("#trade-password").val(),
+						money:$("#invest-money").val(),
+					},
+					success: function(result) {
+						plus.nativeUI.closeWaiting();
+						mui.toast(result.message,{ duration:'long', type:'div' });
+						if(result.code == 200){
+						$("#grab-ticket").css("display", "none");
+				        $("#grab-ticket-backdrop").css("display", "none");
+						 // alert("恭喜您，投注成功");
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						alert(JSON.stringify(errorThrown));
+					}
+			  });
+			}
+			
+			
+//			mui('.mui-fullscreen').on('tap', '.rule', function() {
+//				$("#rule-pop").css("display", "block")
+//				$("#rule-pop-backdrop").css("display", "block")
+//			});
+//			$(".have-konw").on("tap", function() {
+//				$("#rule-pop").css("display", "none")
+//				$("#rule-pop-backdrop").css("display", "none")
+//			});
+//			
+//			mui('.title-desc').on('tap', '.book', function() {
+//				$("#grab-ticket").css("display", "block")
+//				$("#grab-ticket-backdrop").css("display", "block")
+//			});
+//			$(".book-cancle").on('tap',function(){
+//				$("#grab-ticket").css("display", "none")
+//				$("#grab-ticket-backdrop").css("display", "none")
+//			});
+//			$(".book-sure").on('tap',function(){
+//				$("#grab-ticket").css("display", "none")
+//				$("#grab-ticket-backdrop").css("display", "none")
+//			});
+		</script>
+	</body>
+
+</html>

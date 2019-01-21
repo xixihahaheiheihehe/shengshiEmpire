@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/d.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-fullscreen {
+				background: url(../image/bg_home.jpg) no-repeat;
+				background-size: 100% 100%;
+			}
+.turnTable-title{color: #300900;margin-top: -7%;text-align: center;font-size: 1.3rem;font-weight: bold;}
+.turnTable-money{padding: 0 30px;margin-top: 30px;}
+.turnTable-money div{display: inline-block;width: 50%;float: left;}
+.turnTable-money div label{display:  block;text-align: center;color: #7D6043;font-size:16px;}
+.turnTable-money div.golab-number label:nth-child(1){color: #300900;font-size:26px}
+.turnTable-money div.lottery-money label:nth-child(1){color: #9E2B31;font-size: 26px;}
+.turnTable-money div label:nth-child(2){margin-top: 10px;}
+.turnTable-body{width: 100%;top: 20px;position: relative;}
+.turnTable-schedule{clear: both;background: url(../image/zp01.png) center no-repeat;color: white;width: 180px;height: 50px;background-size: 100%;line-height: 50px;font-size: 18px;}
+.turnTable-body .schedule-message{margin-top: 8px;}
+.turnTable-body .schedule-message span{color: #9E2B31;font-size:15px;}
+.turnTable-body .schedule-message span+span{color:#7D6043;}
+.turnTable-body .click-button{position: relative;top: 120px;}
+.turnTable-body .click-button button{width:160px;height: 60px;border: none;}
+.turnTable-body .click-button .lottery-rule{background: url(../image/guize.png) center no-repeat;background-size: 100%;}
+.turnTable-body .click-button .lottery-name{background: url(../image/mingdan.png) center no-repeat;background-size: 100%;}
+          .lottery-box {
+				width:260px;
+				height:260px;
+				position: relative;
+				background: url(../image/zp02.png) no-repeat;
+				background-size: 100% 100%;
+				top: 70px;
+			}
+
+			.lottery-box .playbtn{
+				width: 60px;
+				height: 60px;
+				position: absolute;
+				top: 100px;
+				left:100px;
+				background: url(../image/zp03.png) no-repeat;
+				background-size: 100% 100%;
+				z-index: 2;
+			}
+			
+			.lottery-box-border{
+				width: 330px;
+				height: 360px;
+				background: url(../image/zp04.png) no-repeat;
+				background-size: 100% 100%;
+				position: absolute;
+				top:-55px;
+				left: -35px;
+				z-index: 1;
+			}
+			.circleChart{
+				width: 260px;
+				height: 260px;
+				position: absolute;
+				top: 0px;
+				left: 0px;;
+				z-index: 0;
+	
+			}
+			.mui-popup-title{color:#300900;padding-top:20px;font-size: 20px;}
+			.mui-popup-title+.mui-popup-text{margin: 10px 0 30px 0;color: #7D6043;font-size: 16px;}
+			.mui-popup-button:first-child:last-child{width: 100%;height: 50px;background: transparent;border:none;border-top:.5px solid #BDA069;color:#9E2B31;}
+			.mui-popup-title+.mui-popup-text .popup-tip-title{color:#9E2B31;font-size: 30px;padding: 15px 0;}
+			.mui-popup-title+.mui-popup-text .popup-tip-text{padding: 5px 10px 0 10px;line-height: 25px;text-align: left;}
+			.m-pop .mui-popup-inner{
+				height: 400px;
+				padding: 0;
+			}
+			.m-pop .m-pop-title{
+				border-bottom: 1px solid #C0A16B;
+				text-align: left;
+				line-height: 50px;
+				padding: 0 4%;
+				font-weight: bold;
+			}
+			.m-pop .m-pop-title .close-pop{
+				float: right;
+				font-weight: 400;
+				cursor: pointer;
+			}
+			.m-pop .mui-scroll-wrapper{
+				top: 50px;
+			}
+			
+			.m-pop .mui-scroll-wrapper .mui-table-view:before,.m-pop .mui-scroll-wrapper .mui-table-view-cell:after,.m-pop .mui-scroll-wrapper .mui-table-view:after{
+				height: 0;
+			}
+			.m-pop .mui-table-view-cell>a{
+				text-align: left;
+			}
+			.m-pop .mui-table-view-cell>a span{
+				display: inline-block;
+				width: 60%;
+				text-overflow: ellipsis;
+				white-space:nowrap;
+				overflow: hidden;
+				
+			}
+			.m-pop .mui-table-view-cell>a label{
+				float: right;
+				color: #3D1A00;
+			}
+			.m-pop{
+				color: #3D1A00;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-fullscreen">
+			<a class="mui-action-back"><img src="../image/back.png" /></a>
+			<div class="turnTable-title">大转盘</div>
+			<div class="turnTable-money">
+				<div class="golab-number">
+					<label class="item-score">323689</label>
+					<label class="item-title">第8局</label>
+				</div>
+				<div class="lottery-money">
+					<label class="totalRC">8888888</label>
+					<label >奖池累计(RC)</label>
+				</div>
+			</div>
+           
+           <div class="turnTable-body" align="center">
+           	<div class="turnTable-schedule">
+				第9局
+			</div>
+			<div class="schedule-message"><span class="have-plan">已筹88888888</span><span class="need-plan">/需筹99999999,进度:90%</span></div>
+			
+			<div class="lottery-box">
+				<div class="lottery-box-border"></div>
+				<div class="circleChart" ></div>
+				<div class="playbtn"  title="开始抽奖"></div>
+			</div>
+			
+			<div class="click-button">
+				<button class="lottery-rule"></button>
+				<button class="lottery-name"></button>
+			</div>
+		  </div>
+		  
+		      <div class="mui-popup mui-popup-in" id='grab-ticket' style="display: none;">
+				<div class="mui-popup-inner">
+					<div class="book-title lottery"><label>抽奖</label><label class="item-title">第8局</label><label>预约</label></div>
+					<div class="book-number">
+						<div><label>请输入数量:</label><label class="canUse-score">可用368000</label></div>
+						<input type="text" id="invest-money" placeholder="输入数量(最低100 ~ 最高5%)">
+					</div>
+					<div class="book-number">
+						<div><label>交易密码:</label></div>
+						<input type="text" id="trade-password" placeholder="输入交易密码">
+					</div>
+					<div class="book-button">
+						<button class="book-cancle">取消</button>
+						<button class="book-sure">确定</button>
+					</div>
+				</div>
+			</div>
+			<div class="mui-popup-backdrop mui-active" id='grab-ticket-backdrop' style="display: none;"></div>
+			
+			<!-- 中奖名单 -->
+			<div class="mui-popup mui-popup-in m-pop" id='prize-list-pop' style="display: none;">
+				<div class="mui-popup-inner">
+					<div class="m-pop-title"> <span class="drawName-list">第八局中奖名单</span>  <apan class='close-pop'>X</apan></div>
+					<div class="mui-scroll-wrapper" >
+						<div class="mui-scroll">
+							<ul class="mui-table-view " style="background: transparent;">
+									<li class="mui-table-view-cell" class="draw-name-list">
+										<!--<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li>
+									<li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li>
+									<li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li><li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li><li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li><li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li><li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li><li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li>
+									<li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li>
+									<li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li><li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li><li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li><li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li><li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li><li class="mui-table-view-cell">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li><li class="mui-table-view-cell" id="lastone">
+										<a class="">
+											<span>gefdsfbdfbv....nvoasdnvoas</span>
+											<label>一等奖</label>
+										</a>
+									</li>-->
+								</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="mui-popup mui-popup-in" id='rule-pop' style="display: none;">
+				<div class="mui-popup-inner">
+					<h5>规则说明</h5>
+					<p class="rule-text">以太坊协议将尽可能简单，以便以某些数据存储和时间上的低效为代价。一个普通的程序员也能够完美地 去实现完整的开发说明。这将最终有助于降低任何特殊个人或精英团体可能对协议的影响并且推进以太坊作为对所有人 开发的协议的应用前景。
+					</p>
+					<button class="have-konw">我已了解</button>
+				</div>
+			</div>
+			<div class="mui-popup-backdrop mui-active" id='rule-pop-backdrop' style="display: none;"></div>
+		  </div>
+		  
+		  <script type="text/html" id="draw-list">
+		  	<% for(i=0;i<list.length;i++)%>
+		  	<li class="mui-table-view-cell" <%if(i==list.length-1){%>id="lastone"<%}%>>
+				<a class="">
+					<span><%=list[i].name%></span>
+					<label><%=list[i].awards></label>
+				</a>
+			</li>
+		  </script>
+		  
+        <script type="text/javascript" src="../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="../js/jquery.rotate.min.js" ></script>
+		<script type="text/javascript" src="../js/circleChart.min.js" ></script>
+		<script type="text/javascript" src="../js/common.js" ></script>
+		<script type="text/javascript" src="../js/drawPrize.js" ></script>
+		<script type="text/javascript">
+			mui.init();
+			$(".mui-scroll").on("scroll",function(){
+				console.log($("#lastone").offset().top);
+			})
+		</script>
+	</body>
+</html>

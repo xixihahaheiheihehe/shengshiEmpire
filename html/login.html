@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/common.css" />
+		<link rel="stylesheet" href="../css/d.css" />
+		<style>
+		.mui-fullscreen {background: url(../image/bg_home.jpg) no-repeat;background-size: 100% 100%;}
+		.mui-fullscreen a {float: right;color: #300900;margin-right: 20px;font-size: 1rem;margin-top: 15%;}
+			.login-form .login-btn{width:160px;height: 60px;border: none;}
+			.login-form .login-btn{background: url(../image/login.png) center no-repeat;background-size: 100%;}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-fullscreen">
+			<a class="forget_password">忘记密码</a>
+			<div class="login-logo" align="center">
+				<img src="../image/logo.png" />
+			</div>
+			<label class="login-desc">ETH钱包地址:</label>
+			<div class="login-form" align="center">
+
+				<!--<input type="text"  placeholder="请输入ETH钱包地址" />
+				<input type="text" placeholder="设置登录密码" />
+				<input type="text" placeholder="邀请码" />
+				
+			<button type="submit" class="login-btn">登录</button>-->
+
+				<input type="text" value="0xb4475039Cd4263c8FAe5a2a748A90D165b8a65E1" id="eth" placeholder="请输入ETH钱包地址" />
+				<input type="password"  value="1234566" id="password" placeholder="设置登录密码" />
+				<input type="text" value="E612965" id="inviter" placeholder="邀请码" />
+				<button class="login-btn"></button>
+				<!--<button type="submit"  class="login-btn">登录</button>-->
+
+			</div>
+		</div>
+
+		<script type="text/javascript" src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="../js/common.js" ></script>
+		<script type="text/javascript">
+			mui.init();
+			mui('.login-form').on('tap', '.login-btn', function() {
+				var params ={};
+				params.from = itemUrl.mfrom;
+				params.sign = itemUrl.sign;
+				params.eth = $("#eth").val();
+				params.password = $("#password").val();
+				params.inviter = $("#inviter").val();
+				mui.post(baseUrl+itemUrl.login,params,function(data){
+					// console.log(JSON.stringify(data));
+					mui.toast(data.message,{ duration:'long', type:'div' });
+						if(data.code=="200"){
+							plus.storage.setItem("token",data.token);
+							plus.storage.setItem("userInfo",JSON.stringify(data.data));
+							mui.openWindow({
+								id: 'index',
+								url: '../index.html'
+							});
+						}
+					},'json'
+				);
+				
+			});
+			
+			mui('.mui-fullscreen').on('tap','.forget_password',function(){
+				mui.openWindow({
+					id: 'reset_password',
+					url: 'reset_password.html'
+				});
+			});
+			function lognin(){
+				
+			}
+            mui.plusReady(function () {
+                if(plus.os.name=="Android"){
+            		 plus.navigator.setStatusBarStyle("dark");
+            	}
+            });
+
+		</script>
+	</body>
+
+</html>

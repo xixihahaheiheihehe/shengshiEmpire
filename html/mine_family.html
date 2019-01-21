@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/c.css" rel="stylesheet" />
+		<style>
+			.mui-pull-top-pocket{
+			  top: 140px !important;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="mui-fullscreen nomal-bg" >
+			<a class="mui-action-back mui-icon mui-pull-left"><img class="back" src="../image/back.png"/></a>
+			<div class="c-subTitle">
+				我的家族
+			</div>
+		</div>
+		
+		<script src="../js/mui.js"></script>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript">
+			//启用双击监听
+			mui.init({
+				gestureConfig:{
+					doubletap:true
+				},
+				subpages:[{
+					url:'mine_family_sub.html',
+					id:'mine_family_sub.html',
+					styles:{
+						top: '135px',
+						bottom: '0px',
+					}
+				}]
+			});
+		
+
+		</script>
+	</body>
+
+</html>

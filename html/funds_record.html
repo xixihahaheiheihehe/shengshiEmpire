@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/d.css" rel="stylesheet" />
+		<link href="../css/c.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css" />
+		<style>
+			.c-list-view .c-list-item-top{
+				font-size:16px ;
+				color: #421A05;
+			}
+			.c-list-view .c-list-item-top label:nth-child(2){
+				float: right;
+			}
+			.c-list-view .c-list-item-bottom{
+				font-size:13px ;
+				color: #421A05;
+				margin-top: 5px;
+			}
+			.c-list-view .c-list-item-top label.reward{
+				color: #77945E;
+			}
+			.c-filter{
+				position: relative;
+			}
+			.c-filter label{position: absolute;
+			top: 18px;}
+			
+			.all-ti-code{
+				background: url(../image/en01.png) no-repeat 85%;
+				padding:5px 30px 5px 10px;
+				font-size: 1rem;
+				color:#300900;
+				background-color: #EFE4D0;
+				border:1px solid #BDA069;
+				border-radius:20px;
+				text-align: left;background-size: 12px;
+				margin: 10px 0px 10px 10px;
+				display: inline-block; 
+				text-overflow:ellipsis;
+				overflow: hidden;
+				}
+			.c-filter a:nth-child(4){
+				margin-left: 20px;
+			}
+			.mui-dtpicker, .mui-poppicker,.mui-picker{background: #EFE4D0;}
+			.mui-dtpicker-title h5{background: #EFE4D0;border: none;color:#7D6043;}
+			.mui-dtpicker-header{padding: 15px;}
+			.mui-dtpicker-header button{border: none;background: transparent;font-size: 16px;}
+			.mui-dtpicker-header button[data-id='btn-cancel']{color: #300900;}
+			.mui-dtpicker-header button[data-id='btn-ok']{color:#9E2B31;}
+			.mui-pciker-list li{color:#7D6043;}
+			.mui-pciker-list li.highlight{color: #300900;}
+			.c-popover.mui-popover.mui-popover-action{
+				background: #EFE4D0 !important
+			}
+			.c-popover.mui-popover.mui-popover-action .mui-table-view{
+				background: none;
+				color: #381100;
+			}
+			.c-popover.mui-popover.mui-popover-action .mui-table-view .mui-table-view-cell:after{
+				height: 0;
+			}
+			
+			.mui-pull-bottom-pocket{
+				margin-top: 200px !important;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="mui-fullscreen nomal-bg">
+			<a class="mui-action-back mui-icon mui-pull-left"><img class="back" src="../image/back.png" /></a>
+			<div class="c-subTitle">
+				资金记录
+			</div>
+			<div class="c-filter">
+				<a href="#all-code" class="all-ti-code">全部</a>
+				<a href="#" class="all-ti-code year">起始时间</a>
+				<label>至</label>
+				<a href="#" class="all-ti-code year">截止时间</a>
+			</div>
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="background: transparent;">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul class="mui-table-view  c-list-view " id="main-list">
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	 <div id="all-code" class="c-popover mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view all-code-list">
+			</ul>
+		</div> 
+		<script type="text/html" id="funds">
+			<%for(i = 0 ; i < list.length ; i++){%>
+			<li class="mui-table-view-cell">
+					<div class="c-list-item-top" >
+					<label><%= list[i].title%></label>
+					<label> <%= list[i].total%> </label>
+					</div>
+					<div class="c-list-item-bottom"><%=list[i].create_at%> 备注: <%=list[i].note%></div>
+			</li>
+		
+			<%}%>
+		</script>
+		<script src="../js/mui.js"></script>
+		<script type="text/javascript" src="../js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.11.0.js"></script>
+		<script src="../js/template.js"></script>
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true ,//启用右滑关闭功能
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						style:'circle',
+						callback: pulldownRefresh
+					},
+					up: {
+						auto:true,
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+					page=1;
+					initData();
+				
+			}
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				page++;
+				initData();
+			}
+			var type=0,startTime=0,endTime=0,page=1;
+			mui('.c-filter').on('tap', '.all-ti-code.year', function() {
+				var self = $(this);
+				var picker;
+				if (picker) {
+					picker.show(function(rs) {
+						if(self.text() == "起始时间"){
+							startTime = rs.text;
+						}else{
+							endTime = rs.text;
+						}
+						self.text(rs.text);
+						picker.dispose();
+						picker = null;
+					});
+				} else {
+					picker = new mui.DtPicker({
+						"type": "month"
+					});
+					picker.show(function(rs) {
+						if(self.text() == "起始时间"){
+							startTime = rs.text;
+						}else{
+							endTime = rs.text;
+						}
+						self.text(rs.text);
+						initData();
+						picker.dispose();
+						picker = null;
+					});
+				}
+			});
+			mui('body').on('shown', '.mui-popover', function(e) {
+				//console.log('shown', e.detail.id);//detail为当前popover元素
+			});
+
+			mui('body').on('hidden', '.mui-popover', function(e) {
+				//console.log('hidden', e.detail.id);//detail为当前popover元素
+			});
+			var info = document.getElementById("info");
+			mui('body').on('tap', '.mui-popover-action li>a', function() {
+				var a = this,
+					parent;
+				//根据点击按钮，反推当前是哪个actionsheet
+				for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+					if (parent.classList.contains('mui-popover-action')) {
+						break;
+					}
+				}
+				//关闭actionsheet
+				mui('#' + parent.id).popover('toggle');
+				
+				
+			});
+
+
+			mui.plusReady(function() {
+				initData();
+			});
+			
+			function initData() {
+				var params = {};
+				params.from = itemUrl.mfrom;
+				params.sign = itemUrl.sign;
+				params.token = getToken();
+				params.start_time = startTime;
+				params.end_date = endTime;
+				params.type = type;
+				params.page = page;
+				mui.post(baseUrl + itemUrl.record, params, function(data) {
+					if (data.code == "200") {
+						var family_html = template.render('funds', data.data);
+						if(page==1){
+							 $("#main-list").html(family_html);
+							 mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+						}else{
+							  $("#main-list").append(family_html);
+							  mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+						} 
+						
+                       $(".all-code-list").empty();
+						$.each(data.data.business, function(key, value) {
+							var item = '<li class="mui-table-view-cell">' +
+								'<a href="#">' + value + '</a>' +
+								'</li>';
+							$(".all-code-list").append(item);
+						});
+
+
+					}
+				}, 'json');
+			}
+		</script>
+	</body>
+
+</html>

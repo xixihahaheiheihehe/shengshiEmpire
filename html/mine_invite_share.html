@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/c.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<div class="mui-fullscreen nomal-bg" >
+			<a class="mui-action-back mui-icon mui-pull-left"><img class="back" src="../image/back.png"/></a>
+			<div class="c-subTitle">
+				邀请分享
+			</div>
+			<div class="c-center-content">
+				<div id="minviter">我的邀请码：G0009</div>
+				<img class="code" src="../image/tubiao.png"/>
+				<div>
+					<button type="button" onclick="savePicture()" class="mui-btn c-main-btn">保存二维码</button>
+				</div>
+				
+			</div>
+		</div>
+		<script src="../js/mui.js"></script>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var path;
+			function plusReady(){
+				var params ={};
+				params.from = itemUrl.mfrom;
+				params.sign = itemUrl.sign;
+				params.token = plus.storage.getItem("token");
+				
+				mui.getJSON(baseUrl+itemUrl.inviter,params,function(data){
+					if(data.code=='200'){
+						$(".code").attr("src",data.data.image);
+						path = data.data.image;
+						$("#minviter").text("我的邀请码："+data.data.inviter);
+					}
+				}
+			);
+			}
+			function savePicture() {
+				plus.gallery.save( path, function () {
+					mui.toast( "保存图片到相册成功",{ duration:'long', type:'div' });
+				},function(){
+					
+						mui.toast( "保存图片失败",{ duration:'long', type:'div' });
+				});
+			}
+				document.addEventListener("plusready",plusReady,false);
+		</script>
+	</body>
+
+</html>

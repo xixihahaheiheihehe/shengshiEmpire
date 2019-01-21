@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="../css/mui.min.css" rel="stylesheet"/>
+    <link href="../css/d.css" rel="stylesheet"/>
+    <link href="../css/c.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../css/common.css" />
+	<style>
+		.c-subTitle .c-right-img{
+			width: 20px;
+			float: right;
+			margin: 15px 3%;
+		}
+		#shan-dui .duihuan-title{color: #300900;font-size:20px;margin-bottom: 20px;}
+		#shan-dui .duihuan-button{margin-bottom: 15px;}
+		#shan-dui .duihuan-button button{width: 110px;height: 40px;border-radius: 25px;background-color: #DCD0BA;border-color: #DCD0BA;color:#7D6043 ;}
+		#shan-dui .duihuan-button button.click-active{background-color:#9E2B31;color: #FFFFFF;}
+		.c-copy-trs-btn{
+			position: absolute;
+			right: 0;
+			width: 100px;
+			height: 50px;
+			top: 0;
+			border: none;
+			background: transparent !important;
+			right: 5%;
+		}
+	
+	</style>
+	</head>
+	<body>
+		
+		<div class=" mui-fullscreen duihuan-bg" >
+				 <div class="c-subTitle">
+					 兑换
+					 <a href="funds_record.html"><img class="c-right-img" src="../image/jilu.png" /></a>
+				 </div>
+				 <div class="c-duihuan-top">
+					 <div class="c-red-top">
+						 <span id="c-score" style="max-width: 100%;"></span>
+						 <label>可用资金</label>
+					 </div>
+					<ul class="top-bottom">
+						<li>
+							<p id="c-money">45</p>
+							<span>奖励资金</span>
+						</li>
+						<li>
+							<p id="c-score-deposit">2000</p>
+							<span>冻结资金</span>
+						</li>
+					</ul>
+				</div>
+				<div class="c-duihuan-btn">
+					<button class="shandui"></button>
+					<button class="zhuanzhang"></button>
+					<div style="clear: both;"></div>
+				</div>
+				<div class="c-duihuan-address">
+					<div class="tip">ETH充值地址 (点击复制) :</div>
+					 <div style="position: relative;"><div class="home-ti-code" style="margin: 10px 0; width: 100%;border-width: 1px;">456456fffffer4654y65y6u76u76u768u673e</div><button onclick="copy()" class="c-copy-trs-btn"></button></div>
+				</div>
+				<div class="c-duihuan-bottom">
+					<div class="tip">兑换说明:</div>
+					<div class="c-tip-role">
+						<p>1、1ETH=1000RC;</p>
+						<p>2、实时到账，区块确认36个。</p>
+						
+					</div> 
+				</div>
+				
+				<div class="mui-popup mui-popup-in" id='grab-ticket' style="display: none;">
+				<div class="mui-popup-inner">
+				<div class="duihuan-title">转账</div>
+					<div class="book-number">
+						<div><label>转账数量:</label><label>可用368000</label></div>
+						<input type="text" id="targetNumber" placeholder="输入数量">
+					</div>
+					<div class="book-number">
+						<div><label>钱包地址:</label></div>
+						<input type="text" id="targetEth" placeholder="输入钱包地址">
+					</div>
+					<div class="book-number">
+						<div><label>交易密码:</label></div>
+						<input type="password" id="passWord4Post" placeholder="输入交易密码">
+					</div>
+					<div class="book-button">
+						<button class="book-cancle">取消</button>
+						<button class="book-sure" >确定</button>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="mui-popup mui-popup-in" id='shan-dui' style="display: none;">
+				<div class="mui-popup-inner">
+				<div class="duihuan-title">闪兑</div>
+				<div class="duihuan-button"><button class="click-active">闪兑可用</button><button style="margin-left: 5px;">闪兑外部</button></div>
+					<div class="book-number">
+						<div><label>兑换数量:</label><label id="moneyCny">可用368000</label></div>
+						<input type="text" id="duinum" placeholder="输入数量">
+					</div>
+					<div class="book-number wallet-address" style="display: none;">
+						<div><label>钱包地址:</label></div>
+						<input type="text" id="duiAddress" placeholder="输入钱包地址">
+					</div>
+					<div class="book-number">
+						<div><label>交易密码:</label></div>
+						<input type="password" id="duiPw"  placeholder="输入交易密码">
+					</div>
+					<div class="book-button">
+						<button class="book-cancle">取消</button>
+						<button class="book-sure">确定</button>
+					</div>
+				</div>
+			</div>
+			
+			<div class="mui-popup-backdrop mui-active" id='grab-ticket-backdrop' style="display: none;"></div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript">
+			var loginUser ;
+			mui.plusReady(function(){
+				initData()
+			})
+			function initData(){
+				if(!loginUser){
+						loginUser = getUserInfo();
+				}
+				$("#moneyCny").text("可用"+loginUser.wallet.moneyCny);
+				$(".home-ti-code").text(loginUser.profile.eth);
+				var params ={};
+				params.from = itemUrl.mfrom;
+				params.sign = itemUrl.sign;
+				params.token = getToken();
+				mui.get(baseUrl+itemUrl.transfer,params,function(data){
+					if(data.code=="200"){
+						$(".c-tip-role").html(data.data.exchangeinfo);
+						$("#c-score-deposit").text(data.data.wallet.score_deposit);
+						$("#c-money").text(data.data.wallet.money);
+						$("#c-score").text(data.data.wallet.score);
+					}
+					},'json'
+				);
+			}
+			
+			
+			mui('.c-duihuan-btn').on('tap', '.zhuanzhang', function() {
+				$("#grab-ticket").css("display", "block")
+				$("#grab-ticket-backdrop").css("display", "block")
+			});
+			$("#grab-ticket .book-cancle").on('click',function(){
+				$("#grab-ticket").css("display", "none")
+				$("#grab-ticket-backdrop").css("display", "none")
+			});
+			$("#grab-ticket .book-sure").on('click',function(){
+				$("#grab-ticket").css("display", "none")
+				$("#grab-ticket-backdrop").css("display", "none");
+				
+				var params ={};
+				params.from = itemUrl.mfrom;
+				params.sign = itemUrl.sign;
+				params.token = getToken();
+				params.number = $("#targetNumber").val();
+				params.safeword = $("#passWord4Post").val();
+				params.target = $("#targetEth").val();
+				mui.post(baseUrl+itemUrl.post,params,function(data){
+						mui.toast(data.message,{ duration:'long', type:'div' });
+						if(data.code=="200"){
+							initData();
+						}
+					},'json'
+				);
+				
+			});
+			
+			
+			mui('.c-duihuan-btn').on('tap', '.shandui', function() {
+				$("#shan-dui").css("display", "block")
+				$("#grab-ticket-backdrop").css("display", "block")
+			});
+			
+				$("#shan-dui .book-cancle").on('click',function(){
+				$("#shan-dui").css("display", "none")
+				$("#grab-ticket-backdrop").css("display", "none")
+			});
+			$("#shan-dui .book-sure").on('click',function(){
+				$("#shan-dui").css("display", "none")
+				$("#grab-ticket-backdrop").css("display", "none");
+				var params ={};
+				params.from = itemUrl.mfrom;
+				params.sign = itemUrl.sign;
+				params.token = getToken();
+				var url;
+				if($("#shan-dui .click-active").text() == "闪兑可用"){
+					
+					url = itemUrl.exchange;
+				}else{
+					url = itemUrl.withdrawash;
+					params.imtoken_code = $("#duiAddress").val();
+				}
+				console.log($(this).text());		
+				params.number = $("#duinum").val();
+				params.safeword = $("#duiPw").val();
+				
+				mui.post(baseUrl+url,params,function(data){
+						console.log(JSON.stringify(data))
+						mui.toast(data.message,{ duration:'long', type:'div' });
+						if(data.code=="200"){
+							//initData();
+						}
+					},'json'
+				);
+			});
+			
+			mui('.duihuan-button').on('tap','button',function(){
+				
+				$(this).addClass('click-active');
+				if($(this).text() == "闪兑可用"){
+					$('.wallet-address').css('display','none');
+					$('.duihuan-button button').eq(1).removeClass('click-active');
+				}else{
+					$('.wallet-address').css('display','block');
+					$('.duihuan-button button').eq(0).removeClass('click-active');
+				}
+			});
+			function copy(){
+				copy_fun(loginUser.profile.eth);
+			}
+			mui('.c-subTitle').on('tap','.c-right-img',function(){
+					mui.openWindow({
+					id: 'funds_record',
+					url: 'funds_record.html'
+				});
+			})
+		</script>
+	</body>
+</html>
