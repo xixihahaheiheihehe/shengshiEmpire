@@ -62,9 +62,12 @@
 				$(".c-pop").css("display","none");
 				$(".mui-popup-backdrop").css("display","none")
 			});
+			var duiHuanPage;
+			var useinfo;
 			mui.plusReady(function(){
-				var useinfo = getUserInfo();
+				useinfo = getUserInfo();
 				$("#eth").text(useinfo.profile.eth);
+				duiHuanPage = plus.webview.getWebviewById('html/tab_duihuan.html');
 			})
 			function restEth(){
 				var params ={};
@@ -72,14 +75,17 @@
 				params.sign = itemUrl.sign;
 				params.token = plus.storage.getItem("token");
 				params.eth = $("#newEth").val();
-				
-				
+			
 				mui.post(baseUrl+itemUrl.eth,params,function(data){
 					mui.toast(data.message,{ duration:'long', type:'div' });
 						if(data.code=="200"){
+						console.log(JSON.stringify(data));
 						$(".pop-cancel").click();
 						$("#eth").text($("#newEth").val());
 						$("#newEth").val("");
+					    useinfo.profile.eth = params.eth;
+					    plus.storage.setItem("userInfo",useinfo);
+						mui.fire(duiHuanPage,'getNewEth',{newEth:params.eth});
 						}
 					},'json'
 				);

@@ -24,10 +24,13 @@
 .turnTable-body .schedule-message{margin-top: 8px;}
 .turnTable-body .schedule-message span{color: #9E2B31;font-size:15px;}
 .turnTable-body .schedule-message span+span{color:#7D6043;}
-.turnTable-body .click-button{position: relative;top: 120px;}
+.turnTable-body .click-button{position: relative;margin-top: 120px;margin-bottom: 10px;}
 .turnTable-body .click-button button{width:160px;height: 60px;border: none;}
 .turnTable-body .click-button .lottery-rule{background: url(../image/guize.png) center no-repeat;background-size: 100%;}
 .turnTable-body .click-button .lottery-name{background: url(../image/mingdan.png) center no-repeat;background-size: 100%;}
+@media only screen and (max-width: 320px) {
+	.turnTable-body .click-button button{width:130px;height: 60px;border: none;}
+}
           .lottery-box {
 				width:260px;
 				height:260px;
@@ -119,7 +122,10 @@
 		<div class="mui-fullscreen">
 			<a class="mui-action-back"><img src="../image/back.png" /></a>
 			<div class="turnTable-title">大转盘</div>
-			<div class="turnTable-money">
+			
+			<div class="mui-scroll-wrapper" style="top: 10%;">
+				<div class="mui-scroll">
+					<div class="turnTable-money">
 				<div class="golab-number">
 					<label class="item-score">323689</label>
 					<label class="item-title">第8局</label>
@@ -147,6 +153,10 @@
 				<button class="lottery-name"></button>
 			</div>
 		  </div>
+			</div>
+			</div>
+
+
 		  
 		      <div class="mui-popup mui-popup-in" id='grab-ticket' style="display: none;">
 				<div class="mui-popup-inner">
@@ -295,9 +305,19 @@
 		<script type="text/javascript" src="../js/drawPrize.js" ></script>
 		<script type="text/javascript">
 			mui.init();
-			$(".mui-scroll").on("scroll",function(){
-				console.log($("#lastone").offset().top);
-			})
+			mui('.mui-scroll-wrapper').scroll({
+				scrollY: true, //是否竖向滚动
+				scrollX: false, //是否横向滚动
+				startX: 0, //初始化时滚动至x
+				startY: 0, //初始化时滚动至y
+				indicators: false, //是否显示滚动条
+				deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+				bounce: true //是否启用回弹
+			});
+
+			//$(".mui-scroll").on("scroll",function(){
+			//	console.log($("#lastone").offset().top);
+			//})
 		</script>
 	</body>
 </html>

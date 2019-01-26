@@ -83,6 +83,7 @@
 								<label>剩余票数:<%= list[i].deal%></label>
 							</div>
 						</div>
+						<%if(list[i].log){%>
 						<div class="c-card-body">
 							<ul class="mui-table-view">
 								<%for(j = 0 ; j < list[i].log.length ; j++){%>
@@ -102,6 +103,7 @@
 							
 								</ul>
 						</div>
+						<%}%>
 					</div>
 				</li>
 			<%}%>
@@ -136,7 +138,7 @@
 				params.token = getToken();
 				params.state = $(".mui-control-item.mui-active").attr("status");
 				mui.post(baseUrl+itemUrl.log,params,function(data){
-			
+						//console.log(JSON.stringify(data))
 						if(data.code=="200"){
  							var family_html = template.render('main-card', data.data);
  							 $('.mui-control-content.mui-active .mui-table-view').html(family_html);

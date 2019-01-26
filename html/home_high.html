@@ -98,7 +98,9 @@
 					<div class="title-desc">
 						<label> <%=list[i].title%> </label>
 						
-						<% if(list[i].progress==100){ %>
+						<label class="book open-status">预约</label>
+						
+						<!--<% if(list[i].progress==100){ %>
 							<label class="finish">已完成</label>
 						<%}else{%>
 						  <label class="book">
@@ -108,11 +110,11 @@
 							抢票
 						   <%}%>
 					      </label>
-						<%}%>
+						<%}%>-->
 						
 					</div>
 					
-				<div class="progress">
+				<div class="progress" style="background-color: #DCD0BA;;">
 					<%if(list[i].progress<=50){%>
 						<span class="have-chou" style="width:<%=list[i].progress%>%"></span>
 						<span class="need-chou" style="width:0px"> </span>
@@ -137,129 +139,9 @@
 		<script type="text/javascript" src="../js/common.js" ></script>
 		<script type="text/javascript" src="../js/template.js" ></script>
 		<script src="../js/jquery-1.11.0.js"></script>
+		<script type="text/javascript" src="../js/homeHigh.js" ></script>
 		<script type="text/javascript">
-						mui.init();
-			var invset_id,title,progress,totalRC;
-			mui.plusReady(function(){
-				initData();
-			});
-			function initData(){
-					$.ajax({
-					url: baseUrl+itemUrl.itemList,
-					type: 'post',
-					dataType: 'json',
-					data: {
-						token:getToken,
-						from:itemUrl.mfrom,
-						sign:itemUrl.sign,
-						catalog:2,
-						page:1
-					},
-					success: function(result) {
-						if(result.code == 200){
-						console.log(JSON.stringify(result.data));
-						 totalRC = result.data.totalRC;
-						 $(".totalRC").html(result.data.totalRC);
-						 $(".rule-text").html(result.data.rule);
-						  $(".total-money").text("可用"+result.data.score);
-					      var itemHtml = template.render('itemList', result.data);
-					      $(".item-list").append(itemHtml);
-					      initEvent();
-						 }
-					},
-					error: function(xhr, type, errorThrown) {
-						plus.nativeUI.toast(JSON.stringify(errorThrown));
-					}
-			  });
-			}
-           			
-			
-			function initEvent(){
-			 	mui('.mui-fullscreen').on('tap', '.rule', function() {
-				$("#rule-pop").css("display", "block")
-				$("#rule-pop-backdrop").css("display", "block")
-			});
-			$(".have-konw").on("tap", function() {
-				$("#rule-pop").css("display", "none")
-				$("#rule-pop-backdrop").css("display", "none")
-			})
-			
-			mui('.item-list').on('tap',".normal-part",function(){
-				 invset_id = this.getAttribute("data-id");
-				 title = this.getAttribute("data-title");
-				 progress = this.getAttribute("data-progress");
-				 if(progress == 100){return;}
-				 if(progress <= 50){$(".touzhu-action").text("预约");}else{$(".touzhu-action").text("抢票");}
-				 $(".set-number").text(title);
-				
-				$("#grab-ticket").css("display", "block");
-				$("#grab-ticket-backdrop").css("display", "block");
-			})
-		
-			$(".book-cancle").on('tap',function(){
-				$("#grab-ticket").css("display", "none")
-				$("#grab-ticket-backdrop").css("display", "none")
-			});
-			$(".book-sure").on('tap',function(){
-                 if($("#invest-money").val() == ""){alert("请输入投注数量");return;}
-                 if($("#trade-password").val() == ""){alert("请输入交易密码");return;}
-                 invest();
-			});	
-			
-		}
-			//投注
-			function invest(){
-				plus.nativeUI.showWaiting("");
-				$.ajax({
-					url: baseUrl+itemUrl.invest,
-					type: 'post',
-					dataType: 'json',
-					data: {
-						token:getToken,
-						from:itemUrl.mfrom,
-						sign:itemUrl.sign,
-						fid:invset_id,
-						safeword:$("#trade-password").val(),
-						money:$("#invest-money").val(),
-					},
-					success: function(result) {
-						plus.nativeUI.closeWaiting();
-						mui.toast(result.message,{ duration:'long', type:'div' });
-						if(result.code == 200){
-						$("#grab-ticket").css("display", "none");
-				        $("#grab-ticket-backdrop").css("display", "none");
-						 // alert("恭喜您，投注成功");
-						}
-					},
-					error: function(xhr, type, errorThrown) {
-						plus.nativeUI.closeWaiting();
-						alert(JSON.stringify(errorThrown));
-					}
-			  });
-			}
-			
-			
-//			mui('.mui-fullscreen').on('tap', '.rule', function() {
-//				$("#rule-pop").css("display", "block")
-//				$("#rule-pop-backdrop").css("display", "block")
-//			});
-//			$(".have-konw").on("tap", function() {
-//				$("#rule-pop").css("display", "none")
-//				$("#rule-pop-backdrop").css("display", "none")
-//			});
-//			
-//			mui('.title-desc').on('tap', '.book', function() {
-//				$("#grab-ticket").css("display", "block")
-//				$("#grab-ticket-backdrop").css("display", "block")
-//			});
-//			$(".book-cancle").on('tap',function(){
-//				$("#grab-ticket").css("display", "none")
-//				$("#grab-ticket-backdrop").css("display", "none")
-//			});
-//			$(".book-sure").on('tap',function(){
-//				$("#grab-ticket").css("display", "none")
-//				$("#grab-ticket-backdrop").css("display", "none")
-//			});
+		mui.init();
 		</script>
 	</body>
 

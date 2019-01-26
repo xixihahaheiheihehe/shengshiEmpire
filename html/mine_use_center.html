@@ -5,6 +5,7 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/d.css" rel="stylesheet" />
 		<link href="../css/c.css" rel="stylesheet" />
 		<style>
 			.mui-slider .mui-slider-item a{
@@ -31,6 +32,16 @@
 			background: #9D2932;
 			color: #F1ECD8;
 			}
+			.c-copy-trs-btn{
+				position: absolute;
+				right: 0;
+				width: 100px;
+				height: 50px;
+				top: 0;
+				border: none;
+				background: transparent !important;
+				right: 5%;
+			}
 		</style>
 	</head>
 	<body>
@@ -47,31 +58,67 @@
 					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 					  <a href="#">
-						<img src="../image/04.png">
+						<img src="../image/12.png">
 					  </a>
 					</div>
-					<!-- 第一张 -->
 					<div class="mui-slider-item">
 					  <a href="#">
 						<img src="../image/01.png">
 					  </a>
 					</div>
-					<!-- 第二张 -->
 					<div class="mui-slider-item">
 					  <a href="#">
 						<img src="../image/02.png">
 					  </a>
 					</div>
-					<!-- 第三张 -->
 					<div class="mui-slider-item">
 					  <a href="#">
 						<img src="../image/03.png">
 					  </a>
 					</div>
-					<!-- 第四张 -->
 					<div class="mui-slider-item">
 					  <a href="#">
 						<img src="../image/04.png">
+					  </a>
+					</div>
+							<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/05.png">
+					  </a>
+					</div>
+					<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/06.png">
+					  </a>
+					</div>
+					<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/07.png">
+					  </a>
+					</div>
+					<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/08.png">
+					  </a>
+					</div>
+							<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/09.png">
+					  </a>
+					</div>
+					<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/10.png">
+					  </a>
+					</div>
+					<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/11.png">
+					  </a>
+					</div>
+					<div class="mui-slider-item">
+					  <a href="#">
+						<img src="../image/12.png">
 					  </a>
 					</div>
 					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
@@ -91,6 +138,11 @@
 						<li class="mui-table-view-cell name">
 							<label class="c-subLab">昵称</label>
 							<a class="mui-navigate-right" id="nikename">
+							</a>
+						</li>
+						<li class="mui-table-view-cell inviter">
+							<a class="mui-navigate-right" id="inviter">
+								绑定邀请码
 							</a>
 						</li>
 						<li class="mui-table-view-cell grade">
@@ -115,7 +167,7 @@
 						</li>
 				</ul>
 				<div>
-					<button type="button" class="c-red-btn">退出登录</button>
+					<button type="button" onclick="logout()" class="c-red-btn">退出登录</button>
 				</div>
 				</div>
 			</div>
@@ -137,31 +189,31 @@
 				</div>
 			</div>
 			
+			<div class="mui-popup c-pop mui-popup-in " id="inviter-pop" style="display: none;">
+				<div class="mui-popup-inner">
+					<div class="mui-popup-title">绑定邀请码</div>
+					<div class="mui-popup-input c-pop-input">
+						
+						<input type="text" id="inviterinput" autofocus="" placeholder="输入邀请码">
+					</div>
+					
+				</div>
+				<div class="mui-popup-buttons">
+					<span class="mui-popup-button pop-cancel">取消</span>
+					<span class="mui-popup-button pop-sure" onclick="bindinviter()">确定</span>
+				</div>
+			</div>
+			
 			<div class="mui-popup c-pop mui-popup-in" id="rise-pop" style="display: none;">
 				<div class="mui-popup-inner">
 					<div class="mui-popup-title">晋升级别</div>
 					<ul class="mui-table-view mui-grid-view mui-grid-9 c-radio-grid">
-				<!-- 	<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
-						<a class="radio-btn active" href="#">
-							丞相
-						</a>
-					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
-						<a class="radio-btn" href="#">
-							元帅
-						</a>
-					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
-						<a class="radio-btn" href="#">
-							将军
-						</a>
-					</li> -->
 					</ul>
 					
 					<div class="c-bottom-tip c-pop-input">
 						<label id="levelnum">晋升条件:需一次性充值 999 ETH</label>
 						<div class="c-tip">您尚未达到要求，是否晋升级别？</div>
-						
+						 <div style="position: relative;width: 94%;"><div class="home-ti-code" style="margin: 10px 0; width: 100%;border-width: 1px;">456456fffffer4654y65y6u76u76u768u673e</div><button onclick="copy()" class="c-copy-trs-btn"></button></div>
 					</div>
 					
 				</div>
@@ -180,29 +232,58 @@
 			var index = 0;
 			var buy_limit_num = null;
 			var gallery = mui('.mui-slider');
+			var tabHomePage;
 			gallery.slider({
 			  interval:0//自动轮播周期，若为0则不自动播放，默认为0；
 			});
 			$("#slider-pre").on("tap",function(){
 				if(index==-1){
-					index=2;
+					index=1;
 				}else{
 					index -= 1;	
 				}
 				gallery.slider().gotoItem(index);
+				setUseravatar(index);
 			})
 			$("#slider-next").on("tap",function(){
-				if(index==4){
+				if(index==12){
 					index=1;
 				}else{
 					index += 1;
 				}
-				
 				gallery.slider().gotoItem(index);
-			})
+				setUseravatar();
+			});
+			
+			//设置头像
+			function setUseravatar(){
+				var curIndex = 0;
+				
+				
+				var curStr = "";
+				if(index==-1){
+					curIndex=11;
+					curStr= "../image/12.png";
+				}else{
+					curIndex = index;
+					if (curIndex<=8) {
+						curStr= "../image/0"+(curIndex+1)+".png";
+					} else{
+						curStr= "../image/"+(curIndex+1)+".png";
+					}
+				}
+				plus.storage.setItem("avaterIndex",""+curIndex);
+				plus.storage.setItem("avater",curStr);
+				
+				mui.fire(tabHomePage,'setUserInfo',{avatar:curStr});
+			}
+			
 			mui('.mui-scroll-wrapper').scroll({
 				deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
 			});
+			
+			
+			
 			$(".grade").on("tap", function() {
 				// e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 				$("#rise-pop").css("display","block");
@@ -213,6 +294,20 @@
 				$("#name-pop").css("display","block");
 				$(".mui-popup-backdrop").css("display","block")
 			});
+			
+			$(".inviter").on("tap", function() {
+				// e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				if(!isinviter){
+					$("#inviter-pop").css("display","block");
+					$(".mui-popup-backdrop").css("display","block")
+				}else{
+					mui.toast("您已绑定过邀请码",{ duration:'long', type:'div' });
+				}
+				
+			});
+			
+			
+			
 			$(".pop-cancel").on("click",function(){
 				$(".c-pop").css("display","none");
 				$(".mui-popup-backdrop").css("display","none")
@@ -223,17 +318,34 @@
 				var position = $(this).attr("posi");
 				$("#levelnum").text("晋升条件:需一次性充值 "+ buy_limit_num[position]+" ETH");
 			})
-			
+			var isinviter = false;
+			var ethStr;
 			function plusReady(){
+				tabHomePage =  plus.webview.getWebviewById("html/tab_home.html");
+				//头像
+				if(getvater()){
+					index = parseInt(plus.storage.getItem("avaterIndex"));
+					gallery.slider().gotoItem(parseInt(plus.storage.getItem("avaterIndex")));
+				}else{
+					plus.storage.setItem("avater","../image/01.png");
+					plus.storage.setItem("avaterIndex","0");
+				};
+				
+				
 				var params ={};
 				params.from = itemUrl.mfrom;
 				params.sign = itemUrl.sign;
 				params.token = plus.storage.getItem("token");
 				mui.post(baseUrl+itemUrl.center,params,function(data){
+					//console.log(JSON.stringify(data));
 						if(data.code=="200"){
 							$("#nikename").text(data.data.profile.nickname);
 							$("#uid").text(data.data.account.uid);
 							$("#createTime").text(data.data.account.username);
+							ethStr = data.data.profile.eth;
+							if(data.data.account.uid){
+								isinviter = true;
+							};
 							buy_limit_num = data.data.levellist.buy_limit_num;
 							switch(data.data.account.levelname){
 								case "士兵":
@@ -272,9 +384,32 @@
 					params.from = itemUrl.mfrom;
 					params.sign = itemUrl.sign;
 					params.token = plus.storage.getItem("token");
-					params.nickname = $("#nikeNameinput").val();
+					var nickname = $("#nikeNameinput").val();
+					params.nickname = nickname;
 					mui.post(baseUrl+itemUrl.nikeName,params,function(data){
 						//alert(JSON.stringify(data));
+						mui.toast(data.message,{ duration:'long', type:'div' });
+							if(data.code=="200"){
+								//$("#username").text(data.data.account.username);
+								$(".c-pop").css("display","none");
+								$(".mui-popup-backdrop").css("display","none");
+								$("#nikename").text($("#nikeNameinput").val());
+								mui.fire(tabHomePage,'setUserInfo',{nikename:$("#nikeNameinput").val()});
+								$("#nikeNameinput").val("")
+							}
+						},'json'
+					);
+					
+				}
+				
+				function bindinviter(){
+					var params ={};
+					params.from = itemUrl.mfrom;
+					params.sign = itemUrl.sign;
+					params.token = getToken();
+					params.inviter = $("#inviterinput").val();
+					mui.post(baseUrl+itemUrl.bindinviter,params,function(data){
+						
 						mui.toast(data.message,{ duration:'long', type:'div' });
 							if(data.code=="200"){
 								//$("#username").text(data.data.account.username);
@@ -284,6 +419,27 @@
 						},'json'
 					);
 					
+				}
+				
+				function logout(){
+					// 获取所有Webview窗口
+					var wvs=plus.webview.all();
+					
+					console.log(wvs);
+					mui.openWindow({
+						id: 'login',
+						url: 'login.html',
+						extras:{
+							wvs:wvs  //扩展参数
+						}
+					});
+					plus.storage.setItem("token","");
+					plus.storage.setItem("userInfo","");
+				}
+				
+				
+				function copy(){
+					copy_fun(ethStr);
 				}
 		</script>
 	</body>

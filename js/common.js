@@ -23,13 +23,18 @@ var itemUrl ={
 	log:"Gathering/log",
 	record:"wallet/record",
 	invest:"Gathering/invest",//投注
-    itemList:"Gathering/list"//项目列表
+    itemList:"Gathering/list",//项目列表
+	bindinviter:"/account/bindinviter"
 }
 var getUserInfo = function(){
 	return JSON.parse(plus.storage.getItem("userInfo"));
 }
 var getToken = function(){
 	return plus.storage.getItem("token");
+}
+
+var getvater = function(){
+	return plus.storage.getItem("avater");
 }
 
 //  复制方法

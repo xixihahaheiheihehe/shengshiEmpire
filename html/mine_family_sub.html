@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/c.css">
+		<style>
+			.mui-table-view-chevron .mui-table-view-cell>a:not(.mui-btn) {
+				margin-right: -95px;
+			}
+			.mui-ellipsis{
+					color: #351502;
+					font-size: 13px;
+			}
+			.mui-media-object.mui-pull-right{
+				line-height: 30px;
+			}
+		</style>
+	</head>
+
+	<body class="nomal-bg" style="padding: 0;">
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="background: transparent;">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul class="mui-table-view mui-table-view-chevron c-transpant " id="main-list">
+					
+				</ul>
+			</div>
+		</div>
+		<script type="text/html" id="family">
+			<%for(i = 0 ; i < data.length ; i++){%>
+			<li class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<%if (data[i].isactive <=0){%>
+					<div class="mui-media-object mui-pull-right">未激活</div>
+					<%}else{%>
+					<div class="mui-media-object mui-pull-right c-active">已激活</div>
+					<%}%>
+					<div class="mui-media-body">
+						 <%= data[i].nickname%> 
+						<p class="mui-ellipsis">注册时间: <%=data[i].create_at%>  分享人数：<%=data[i].count%></p>
+					</div>
+				</a>
+			</li>
+
+			<%}%>
+		</script>
+		<script src="../js/mui.js"></script>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<script src="../js/template.js"></script>
+		<script src="../js/common.js"></script>
+		<script>
+			var page = 1;
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+					page=1;
+					initData();
+					
+				
+			}
+			mui.plusReady(function(){
+				initData();
+			})
+			function initData(){
+				
+				var params = {};
+				params.from = itemUrl.mfrom;
+				params.sign = itemUrl.sign;
+				params.token = getToken();
+				params.page = page;
+				mui.post(baseUrl+itemUrl.member,params,function(data){
+						if(data.code=="200"){
+							 var family_html = template.render('family', data);
+							 if(page==1){
+								 $("#main-list").html(family_html);
+								 mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+							 }else{
+								  $("#main-list").append(family_html);
+								  mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+							 }
+								
+						}
+					},'json'
+				);
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				page++;
+				initData();
+				
+					//mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					
+		
+			}
+//			if (mui.os.plus) {
+//				mui.plusReady(function() {
+//					setTimeout(function() {
+//						mui('#pullrefresh').pullRefresh().pullupLoading();
+//					}, 10);
+//
+//				});
+//			} else {
+//				mui.ready(function() {
+//					mui('#pullrefresh').pullRefresh().pullupLoading();
+//				});
+//			}
+		</script>
+	</body>
+
+</html>

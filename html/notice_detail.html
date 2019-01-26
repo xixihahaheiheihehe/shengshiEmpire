@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.css" /> />
+		<link rel="stylesheet" href="../css/c.css" />
+		<style>
+			div,p{
+				color: #2A0100;
+			}
+			#date{
+				color: #896C50;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-fullscreen nomal-bg">
+		<a class="mui-action-back mui-icon mui-pull-left"><img class="back" src="../image/back.png"/></a>
+				<div style="padding: 50px 3% 50px 3%;">
+				<div id="title">vvv</div>
+				<div id="date">vvv</div>
+				<div id="content">vvv</div>
+				</div>
+		 </div>
+		<script type="text/javascript" src="../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../js/common.js" ></script>
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+		<script>
+			
+				mui.init();
+				var self; 
+			mui.plusReady(function(){
+				self = plus.webview.currentWebview();
+				requestData();
+			});
+			
+			function requestData(){
+					$.ajax({
+					url: baseUrl+itemUrl.noticeDetail,
+					type: 'get',
+					dataType: 'json',
+					data: {
+						token:getToken,
+						from:itemUrl.mfrom,
+						sign:itemUrl.sign,
+						id: self.articleId
+					},
+					success: function(result) {
+					console.log(JSON.stringify(result));
+						if(result.code=="200"){
+							$("#title").text(result.data.title);
+							$("#content").html(result.data.content);
+							$("#date").text(result.data.date);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						alert(JSON.stringify(errorThrown));
+					}
+				});
+			}
+			
+//			var w, embed, ws;
+//			mui.init();
+//			mui.plusReady(function() {
+//				readyroad();
+//				ws = plus.webview.currentWebview();
+//				var url = ws.url;
+//				var title = ws.title;
+//				$(".mui-title").html(title);
+//				var topoffset = '50px';
+//				if(plus.navigator.isImmersedStatusbar()) { // 兼容immersed状态栏模式
+//					topoffset = (Math.round(plus.navigator.getStatusbarHeight()) + 45) + 'px';
+//				}
+//				embed = plus.webview.create("http://www.baidu.com", 'embed', {
+//					top: topoffset,
+//					bottom: '0px',
+//					position: 'dock',
+//					dock: 'bottom',
+//					bounce: 'vertical'
+//				});
+//				ws.append(embed);
+//				ws.append("/js/mui.min.js");
+//				embed.addEventListener('loaded', function() {
+//					Common.closeWaiting(w);
+//				}, false);
+//				embed.addEventListener('loading', function() {
+//					w = Common.showWaiting();
+//				}, false);
+//			});
+		</script>
+	</body>
+
+</html>

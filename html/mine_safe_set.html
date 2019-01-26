@@ -57,12 +57,12 @@
 					<div class="mui-popup-inner">
 						<div class="mui-popup-title">设置交易密码</div>
 						<div class="mui-popup-input c-pop-input">
-							<label>设置交易密码</label>
-							<input type="password" autofocus="" placeholder="输入交易密码">
+							<label class="label1">设置交易密码</label>
+							<input class="1" type="password" autofocus="" placeholder="输入交易密码">
 						</div>
 						<div class="mui-popup-input c-pop-input" style="margin-bottom: 30px;">
-							<label>设置交易密码</label>
-							<input type="password" autofocus="" id="newjy" placeholder="输入交易密码">
+							<label class="label2" >确认交易密码</label>
+							<input class="label2" type="password" autofocus="" id="newjy" placeholder="再次输入交易密码">
 						</div>
 					</div>
 					<div class="mui-popup-buttons">
@@ -74,7 +74,18 @@
 		<script src="../js/jquery-1.11.0.js"></script>
 		<script src="../js/common.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
+			var loginUser ;
+			mui.plusReady(function(){
+				if(true){
+					$("#promptBtn").text("修改");
+					$("#jiaoyi-pop .mui-popup-title").text("修改交易密码");
+					$("#jiaoyi-pop .label1").text("旧交易密码");
+					$("#jiaoyi-pop .input1").attr("placeholder","输入旧交易密码");
+					$("#jiaoyi-pop .label2").text("新交易密码");
+					$("#jiaoyi-pop .input2").attr("placeholder","输入新交易密码");
+				}
+			})
 			document.getElementById("promptBtn").addEventListener('tap', function(e) {
 				e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 				$("#jiaoyi-pop").css("display","block")

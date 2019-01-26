@@ -38,9 +38,9 @@
 	<script type="text/javascript">
 		mui.init();
 		mui.plusReady(function () {
-			if(plus.os.android){
-				var h=plus.webview.getLaunchWebview();
-			plus.webview.close(h);
+			if(plus.os.name=="Android"){
+				var parentview = plus.webview.currentWebview().opener();
+				plus.webview.close(parentview); 
 			}
 			
 		  

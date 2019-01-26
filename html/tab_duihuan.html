@@ -40,12 +40,12 @@
 				 </div>
 				 <div class="c-duihuan-top">
 					 <div class="c-red-top">
-						 <span id="c-score" style="max-width: 100%;"></span>
+						 <span id="c-score" style="max-width: 100%;">111</span>
 						 <label>可用资金</label>
 					 </div>
 					<ul class="top-bottom">
 						<li>
-							<p id="c-money">45</p>
+							<p id="c-money">45235476</p>
 							<span>奖励资金</span>
 						</li>
 						<li>
@@ -60,7 +60,7 @@
 					<div style="clear: both;"></div>
 				</div>
 				<div class="c-duihuan-address">
-					<div class="tip">ETH充值地址 (点击复制) :</div>
+					<div class="tip">ETH充值地址 (点击获取货币地址) :</div>
 					 <div style="position: relative;"><div class="home-ti-code" style="margin: 10px 0; width: 100%;border-width: 1px;">456456fffffer4654y65y6u76u76u768u673e</div><button onclick="copy()" class="c-copy-trs-btn"></button></div>
 				</div>
 				<div class="c-duihuan-bottom">
@@ -76,12 +76,12 @@
 				<div class="mui-popup-inner">
 				<div class="duihuan-title">转账</div>
 					<div class="book-number">
-						<div><label>转账数量:</label><label>可用368000</label></div>
+						<div><label>转账数量:</label><label class="moneyCny" >可用368000</label></div>
 						<input type="text" id="targetNumber" placeholder="输入数量">
 					</div>
 					<div class="book-number">
-						<div><label>钱包地址:</label></div>
-						<input type="text" id="targetEth" placeholder="输入钱包地址">
+						<div><label>用户名:</label></div>
+						<input type="text" id="targetEth" placeholder="输入用户名">
 					</div>
 					<div class="book-number">
 						<div><label>交易密码:</label></div>
@@ -101,7 +101,7 @@
 				<div class="duihuan-title">闪兑</div>
 				<div class="duihuan-button"><button class="click-active">闪兑可用</button><button style="margin-left: 5px;">闪兑外部</button></div>
 					<div class="book-number">
-						<div><label>兑换数量:</label><label id="moneyCny">可用368000</label></div>
+						<div><label>兑换数量:</label><label class="moneyCny">可用368000</label></div>
 						<input type="text" id="duinum" placeholder="输入数量">
 					</div>
 					<div class="book-number wallet-address" style="display: none;">
@@ -133,14 +133,16 @@
 				if(!loginUser){
 						loginUser = getUserInfo();
 				}
-				$("#moneyCny").text("可用"+loginUser.wallet.moneyCny);
+				
 				$(".home-ti-code").text(loginUser.profile.eth);
 				var params ={};
 				params.from = itemUrl.mfrom;
 				params.sign = itemUrl.sign;
 				params.token = getToken();
 				mui.get(baseUrl+itemUrl.transfer,params,function(data){
+					console.log(JSON.stringify(data))
 					if(data.code=="200"){
+						$(".moneyCny").text("可用"+data.data.wallet.moneyCny);
 						$(".c-tip-role").html(data.data.exchangeinfo);
 						$("#c-score-deposit").text(data.data.wallet.score_deposit);
 						$("#c-money").text(data.data.wallet.money);
@@ -213,7 +215,7 @@
 						console.log(JSON.stringify(data))
 						mui.toast(data.message,{ duration:'long', type:'div' });
 						if(data.code=="200"){
-							//initData();
+							initData();
 						}
 					},'json'
 				);
@@ -231,14 +233,21 @@
 				}
 			});
 			function copy(){
-				copy_fun(loginUser.profile.eth);
+				copy_fun( $(".home-ti-code").text());
 			}
 			mui('.c-subTitle').on('tap','.c-right-img',function(){
 					mui.openWindow({
 					id: 'funds_record',
 					url: 'funds_record.html'
 				});
-			})
+			});
+			
+			document.addEventListener("getNewEth",function(event){
+				if (event.detail.newEth) {
+					  $(".home-ti-code").text(event.detail.newEth);
+                 }
+			
+			});
 		</script>
 	</body>
 </html>

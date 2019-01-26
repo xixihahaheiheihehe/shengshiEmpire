@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/c.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="mui-fullscreen nomal-bg">
+			<a class="mui-action-back mui-icon mui-pull-left"><img class="back" src="../image/back.png"/></a>
+			<div class="c-subTitle">
+			通知公告
+			 </div>
+			 <div class="mui-scroll-wrapper c-media-list">
+			     <div class="mui-scroll">
+			        <ul class="mui-table-view" id="notice-list">
+			        </ul>
+			     </div>
+			 </div>
+		</div>
+		
+		<script type="text/html" id="notice">
+			<%for(i = 0 ; i < list.length ; i++){%>
+				    <li class="mui-table-view-cell mui-media" data-id="<%=list[i].id%>" data-type="<%=list[i].type%>">
+			                <a href="javascript:;" class="mui-navigate-right">
+			                    <div class="mui-media-body">
+			                       <%= list[i].title%> <!--以太坊价格分析：ETH可能升至180美元-->
+			                        <p class="mui-ellipsis">
+			                        	 <%=list[i].date%>      <!--2019-01-10-->
+			                        </p>
+			                    </div>
+			                </a>
+			            </li>
+			<%}%>
+		</script>
+		
+		<script type="text/javascript" src="../js/mui.min.js" ></script>
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="../js/template.js" ></script>
+		<script type="text/javascript" src="../js/common.js" ></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				requestData();
+			});
+			
+			function requestData(){
+					$.ajax({
+					url: baseUrl+itemUrl.notice,
+					type: 'get',
+					dataType: 'json',
+					data: {
+						token:getToken,
+						from:itemUrl.mfrom,
+						sign:itemUrl.sign
+					},
+					success: function(result) {
+					// console.log(JSON.stringify(result));
+					 var notice_html = template.render('notice', result.data);
+					 $("#notice-list").append(notice_html);
+					 mui("#notice-list").on("tap",".mui-table-view-cell",function(){
+						 var dataId = $(this).attr("data-id");
+						 mui.openWindow({
+						 	id: 'notice_detail',
+						 	url: 'notice_detail.html',
+							extras:{
+								articleId:dataId  //扩展参数
+							}
+						 });
+					 })
+					},
+					error: function(xhr, type, errorThrown) {
+						alert(JSON.stringify(errorThrown));
+					}
+				});
+			}
+		</script>
+	</body>
+</html>

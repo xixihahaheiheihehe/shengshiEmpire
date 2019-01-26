@@ -234,7 +234,7 @@ background:#EFE4D0;
 	background:url(../image/shuju.png) no-repeat center;
 	width: 96%;
 	margin: -10px 2% 0;
-	height: 28%;
+	height: 180px;
 	background-size: 100% 100%;
 	position: relative;
 	text-align: center;
@@ -242,7 +242,7 @@ background:#EFE4D0;
 .c-duihuan-top .c-red-top{
 	color: #EFE4D0;
 	text-align: center;
-	padding-top: 8%;
+	padding-top: 12%;
 }
 .c-duihuan-top .c-red-top span{
 	display: block;
@@ -287,7 +287,7 @@ ul li {
 	margin: 0 auto;
 	padding: 0;
 	text-align: center !important;
-	max-width: 40%;
+	max-width: 80%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: auto;
